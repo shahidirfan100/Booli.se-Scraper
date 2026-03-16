@@ -1,0 +1,44 @@
+{
+  "title": "Booli.se Scraper",
+  "description": "Scrape sale listings from Booli search pages. Provide a Booli sale-search URL or use the default till-salu page.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "startUrl": {
+      "title": "Start URL",
+      "type": "string",
+      "description": "Start scraping from a specific Booli sale-search URL.",
+      "editor": "textfield",
+      "prefill": "https://www.booli.se/sok/till-salu"
+    },
+    "results_wanted": {
+      "title": "Maximum number of listings",
+      "type": "integer",
+      "description": "The maximum number of listings to collect.",
+      "minimum": 1,
+      "default": 20,
+      "prefill": 20,
+      "editor": "number"
+    },
+    "max_pages": {
+      "title": "Maximum number of pages",
+      "type": "integer",
+      "description": "A safety cap on the number of search result pages to visit.",
+      "minimum": 1,
+      "default": 3,
+      "prefill": 3,
+      "editor": "number"
+    },
+    "proxyConfiguration": {
+      "title": "Proxy configuration",
+      "type": "object",
+      "description": "Residential proxies are recommended for reliable runs.",
+      "editor": "proxy",
+      "default": {
+        "useApifyProxy": true
+      }
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

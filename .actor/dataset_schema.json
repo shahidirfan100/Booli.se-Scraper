@@ -1,0 +1,119 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "booliId": {
+      "title": "Booli ID",
+      "type": "integer",
+      "description": "Booli listing identifier"
+    },
+    "address": {
+      "title": "Address",
+      "type": "string",
+      "description": "Listing address"
+    },
+    "locationText": {
+      "title": "Location",
+      "type": "string",
+      "description": "Human-readable location summary"
+    },
+    "objectType": {
+      "title": "Object Type",
+      "type": "string",
+      "description": "Property type"
+    },
+    "listPrice": {
+      "title": "List Price",
+      "type": "number",
+      "description": "Advertised list price"
+    },
+    "rooms": {
+      "title": "Rooms",
+      "type": "number",
+      "description": "Number of rooms"
+    },
+    "livingArea": {
+      "title": "Living Area",
+      "type": "number",
+      "description": "Living area in square meters"
+    },
+    "daysActive": {
+      "title": "Days Active",
+      "type": "integer",
+      "description": "How long the listing has been active"
+    },
+    "url": {
+      "title": "URL",
+      "type": "string",
+      "description": "Absolute Booli listing URL"
+    },
+    "thumbnail": {
+      "title": "Thumbnail",
+      "type": "string",
+      "description": "Preview image URL"
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": [
+          "booliId",
+          "address",
+          "locationText",
+          "objectType",
+          "listPrice",
+          "rooms",
+          "livingArea",
+          "daysActive",
+          "url",
+          "thumbnail"
+        ]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "booliId": {
+            "label": "Booli ID",
+            "format": "number"
+          },
+          "address": {
+            "label": "Address",
+            "format": "text"
+          },
+          "locationText": {
+            "label": "Location",
+            "format": "text"
+          },
+          "objectType": {
+            "label": "Object Type",
+            "format": "text"
+          },
+          "listPrice": {
+            "label": "List Price",
+            "format": "number"
+          },
+          "rooms": {
+            "label": "Rooms",
+            "format": "number"
+          },
+          "livingArea": {
+            "label": "Living Area",
+            "format": "number"
+          },
+          "daysActive": {
+            "label": "Days Active",
+            "format": "number"
+          },
+          "url": {
+            "label": "URL",
+            "format": "link"
+          },
+          "thumbnail": {
+            "label": "Thumbnail",
+            "format": "image"
+          }
+        }
+      }
+    }
+  }
+}
