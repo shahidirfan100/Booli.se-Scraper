@@ -1,8 +1,17 @@
-FROM apify/actor-node-playwright-camoufox:22-1.58.2
+FROM apify/actor-node-playwright-chrome:22-1.64.1
 
 COPY --chown=myuser:myuser package*.json ./
+
+# Install production dependencies. The image supports XVFB, so a real browser
+# window can run for Cloudflare-protected pages.
 RUN npm --quiet set progress=false \
 	&& npm install --omit=dev \
+	&& echo "Installed NPM packages:" \
+	&& (npm list --omit=dev --all || true) \
+	&& echo "Node.js version:" \
+	&& node --version \
+	&& echo "NPM version:" \
+	&& npm --version \
 	&& rm -r ~/.npm
 
 COPY --chown=myuser:myuser . ./

@@ -1,9 +1,5 @@
 {
-  "startUrl": "https://www.booli.se/sok/till-salu",
-  "results_wanted": 20,
-  "max_pages": 3,
-  "proxyConfiguration": {
-    "useApifyProxy": true,
-    "apifyProxyGroups": ["RESIDENTIAL"]
-  }
+    "startUrl": "https://www.booli.se/sok/till-salu",
+    "results_wanted": 20,
+    "max_pages": 2
 }

@@ -1,119 +1,229 @@
 {
-  "actorSpecification": 1,
-  "fields": {
-    "booliId": {
-      "title": "Booli ID",
-      "type": "integer",
-      "description": "Booli listing identifier"
-    },
-    "address": {
-      "title": "Address",
-      "type": "string",
-      "description": "Listing address"
-    },
-    "locationText": {
-      "title": "Location",
-      "type": "string",
-      "description": "Human-readable location summary"
-    },
-    "objectType": {
-      "title": "Object Type",
-      "type": "string",
-      "description": "Property type"
-    },
-    "listPrice": {
-      "title": "List Price",
-      "type": "number",
-      "description": "Advertised list price"
-    },
-    "rooms": {
-      "title": "Rooms",
-      "type": "number",
-      "description": "Number of rooms"
-    },
-    "livingArea": {
-      "title": "Living Area",
-      "type": "number",
-      "description": "Living area in square meters"
-    },
-    "daysActive": {
-      "title": "Days Active",
-      "type": "integer",
-      "description": "How long the listing has been active"
-    },
-    "url": {
-      "title": "URL",
-      "type": "string",
-      "description": "Absolute Booli listing URL"
-    },
-    "thumbnail": {
-      "title": "Thumbnail",
-      "type": "string",
-      "description": "Preview image URL"
-    }
-  },
-  "views": {
-    "overview": {
-      "title": "Overview",
-      "transformation": {
-        "fields": [
-          "booliId",
-          "address",
-          "locationText",
-          "objectType",
-          "listPrice",
-          "rooms",
-          "livingArea",
-          "daysActive",
-          "url",
-          "thumbnail"
-        ]
-      },
-      "display": {
-        "component": "table",
-        "properties": {
-          "booliId": {
-            "label": "Booli ID",
-            "format": "number"
-          },
-          "address": {
-            "label": "Address",
-            "format": "text"
-          },
-          "locationText": {
-            "label": "Location",
-            "format": "text"
-          },
-          "objectType": {
-            "label": "Object Type",
-            "format": "text"
-          },
-          "listPrice": {
-            "label": "List Price",
-            "format": "number"
-          },
-          "rooms": {
-            "label": "Rooms",
-            "format": "number"
-          },
-          "livingArea": {
-            "label": "Living Area",
-            "format": "number"
-          },
-          "daysActive": {
-            "label": "Days Active",
-            "format": "number"
-          },
-          "url": {
-            "label": "URL",
-            "format": "link"
-          },
-          "thumbnail": {
-            "label": "Thumbnail",
-            "format": "image"
-          }
+    "actorSpecification": 1,
+    "fields": {
+        "booliId": {
+            "title": "Booli ID",
+            "type": "integer",
+            "description": "Booli listing identifier"
+        },
+        "listingId": {
+            "title": "Listing ID",
+            "type": "string",
+            "description": "Internal Booli listing identifier"
+        },
+        "objectId": {
+            "title": "Object ID",
+            "type": "integer",
+            "description": "Identifier used in the public listing URL"
+        },
+        "url": {
+            "title": "URL",
+            "type": "string",
+            "description": "Absolute Booli listing URL"
+        },
+        "address": {
+            "title": "Address",
+            "type": "string",
+            "description": "Listing address"
+        },
+        "locationText": {
+            "title": "Location",
+            "type": "string",
+            "description": "Human-readable location summary"
+        },
+        "objectType": {
+            "title": "Object Type",
+            "type": "string",
+            "description": "Property type"
+        },
+        "saleType": {
+            "title": "Sale Type",
+            "type": "string",
+            "description": "Sale type reported for the listing"
+        },
+        "listPrice": {
+            "title": "List Price",
+            "type": "number",
+            "description": "Advertised list price"
+        },
+        "listPriceText": {
+            "title": "List Price Text",
+            "type": "string",
+            "description": "Advertised list price as displayed"
+        },
+        "rooms": {
+            "title": "Rooms",
+            "type": "number",
+            "description": "Number of rooms"
+        },
+        "livingArea": {
+            "title": "Living Area",
+            "type": "number",
+            "description": "Living area in square meters"
+        },
+        "plotArea": {
+            "title": "Plot Area",
+            "type": "number",
+            "description": "Plot area in square meters"
+        },
+        "floor": {
+            "title": "Floor",
+            "type": "string",
+            "description": "Floor description"
+        },
+        "fee": {
+            "title": "Monthly Fee",
+            "type": "number",
+            "description": "Monthly association fee"
+        },
+        "rent": {
+            "title": "Rent",
+            "type": "number",
+            "description": "Monthly rent"
+        },
+        "published": {
+            "title": "Published",
+            "type": "string",
+            "description": "Publication date text"
+        },
+        "daysActive": {
+            "title": "Days Active",
+            "type": "integer",
+            "description": "How long the listing has been active"
+        },
+        "latitude": {
+            "title": "Latitude",
+            "type": "number",
+            "description": "Latitude coordinate"
+        },
+        "longitude": {
+            "title": "Longitude",
+            "type": "number",
+            "description": "Longitude coordinate"
+        },
+        "municipality": {
+            "title": "Municipality",
+            "type": "string",
+            "description": "Municipality name"
+        },
+        "county": {
+            "title": "County",
+            "type": "string",
+            "description": "County name"
+        },
+        "brokerName": {
+            "title": "Broker",
+            "type": "string",
+            "description": "Broker or agency name"
+        },
+        "thumbnail": {
+            "title": "Thumbnail",
+            "type": "string",
+            "description": "Preview image URL"
+        },
+        "imageCount": {
+            "title": "Image Count",
+            "type": "integer",
+            "description": "Number of listing images"
+        },
+        "amenities": {
+            "title": "Amenities",
+            "type": "array",
+            "description": "Listing amenity labels"
+        },
+        "showing": {
+            "title": "Next Showing",
+            "type": "string",
+            "description": "Next scheduled showing"
+        },
+        "upcomingSale": {
+            "title": "Upcoming Sale",
+            "type": "boolean",
+            "description": "Whether the sale is upcoming"
+        },
+        "searchUrl": {
+            "title": "Search URL",
+            "type": "string",
+            "description": "Root search URL used for the run"
+        },
+        "pageUrl": {
+            "title": "Page URL",
+            "type": "string",
+            "description": "Result page the listing was collected from"
+        },
+        "page": {
+            "title": "Page",
+            "type": "integer",
+            "description": "Page number where the listing was collected"
         }
-      }
+    },
+    "views": {
+        "overview": {
+            "title": "Overview",
+            "transformation": {
+                "fields": [
+                    "booliId",
+                    "address",
+                    "locationText",
+                    "objectType",
+                    "listPrice",
+                    "rooms",
+                    "livingArea",
+                    "fee",
+                    "daysActive",
+                    "url",
+                    "thumbnail"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "booliId": {
+                        "label": "Booli ID",
+                        "format": "number"
+                    },
+                    "address": {
+                        "label": "Address",
+                        "format": "text"
+                    },
+                    "locationText": {
+                        "label": "Location",
+                        "format": "text"
+                    },
+                    "objectType": {
+                        "label": "Object Type",
+                        "format": "text"
+                    },
+                    "listPrice": {
+                        "label": "List Price",
+                        "format": "number"
+                    },
+                    "rooms": {
+                        "label": "Rooms",
+                        "format": "number"
+                    },
+                    "livingArea": {
+                        "label": "Living Area",
+                        "format": "number"
+                    },
+                    "fee": {
+                        "label": "Monthly Fee",
+                        "format": "number"
+                    },
+                    "daysActive": {
+                        "label": "Days Active",
+                        "format": "number"
+                    },
+                    "url": {
+                        "label": "URL",
+                        "format": "link"
+                    },
+                    "thumbnail": {
+                        "label": "Thumbnail",
+                        "format": "image"
+                    }
+                }
+            }
+        }
     }
-  }
 }

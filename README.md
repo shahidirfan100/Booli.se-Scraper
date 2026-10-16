@@ -1,156 +1,183 @@
-# Booli.se Scraper
+## What does Booli.se Scraper do?
 
-Collect sale listings from Booli search pages with a dataset focused on usable property data. Capture listing identifiers, price points, size metrics, broker metadata, image links, coordinates, and other listing attributes from Booli search results. This actor is designed for monitoring supply, market research, pricing analysis, and building structured real-estate datasets.
+Booli.se Scraper collects property sale listings from Booli, Sweden's property listing site. Give it a Booli sale-search URL and it returns structured listing data such as address, asking price, room count, living area, monthly fee, coordinates, broker, amenities, and the direct listing link. It is built for property monitoring, market research, and building clean real-estate datasets without manual copy-paste.
 
----
+## Why use Booli.se Scraper?
 
-## Features
+- **Reliable collection** - Pages protected by anti-bot checks are handled automatically, and failed attempts are retried before a run gives up.
+- **Rich listing records** - Each item combines pricing, size, location, broker, showing, and media details from the listing card.
+- **Search any Booli filter** - Paste any Booli sale-search URL, including location or property-type filters, and collect exactly that result set.
+- **Pagination built in** - The scraper walks across result pages until it reaches your listing limit or page cap.
+- **Clean, empty-free output** - Fields that the source does not publish are dropped so the dataset stays tidy.
+- **Automation-ready** - Schedule runs, export to CSV, Excel, JSON, or XML, and connect results to spreadsheets, warehouses, or apps.
 
-- **Sale search coverage** - Scrape `till-salu` result pages from Booli with configurable page and result limits.
-- **Rich listing fields** - Capture core fields such as address, location, property type, pricing, room counts, area data, coordinates, broker info, and media links.
-- **Clean dataset output** - Drop empty values so the dataset does not fill up with always-null keys.
-- **Pagination support** - Continue across multiple result pages until the requested limit is reached.
-- **Apify-ready input** - Works with a default Booli search URL and QA-friendly defaults.
+## What data can you extract from Booli?
 
----
+| Field                    | Description                                       |
+| ------------------------ | ------------------------------------------------- |
+| `booliId`                | Booli listing identifier                          |
+| `listingId`              | Internal Booli listing ID                         |
+| `objectId`               | Identifier used in the public listing URL         |
+| `url`                    | Direct listing URL                                |
+| `address`                | Listing address                                   |
+| `locationText`           | Object type, area, and municipality summary       |
+| `objectType`             | Property type, such as apartment or house         |
+| `saleType`               | Sale type, such as succession or new construction |
+| `listPrice`              | Advertised asking price                           |
+| `listPriceText`          | Asking price exactly as displayed                 |
+| `rooms`                  | Number of rooms                                   |
+| `livingArea`             | Living area in square meters                      |
+| `plotArea`               | Plot area in square meters when available         |
+| `floor`                  | Floor description                                 |
+| `fee`                    | Monthly association fee when available            |
+| `rent`                   | Monthly rent when available                       |
+| `published`              | Publication date text                             |
+| `daysActive`             | Approximate days the listing has been active      |
+| `latitude` / `longitude` | Listing coordinates                               |
+| `municipality`           | Municipality name                                 |
+| `county`                 | County name                                       |
+| `brokerName`             | Broker or agency name                             |
+| `thumbnail`              | Preview image URL                                 |
+| `imageCount`             | Number of images on the listing                   |
+| `amenities`              | Amenity labels such as elevator or balcony        |
+| `showing`                | Next scheduled showing                            |
+| `upcomingSale`           | Whether the sale is upcoming                      |
+| `page`                   | Result page the listing was collected from        |
 
-## Use Cases
+## How to use Booli.se Scraper
 
-### Market Monitoring
-Track newly active listings, property mix, and price movements across Booli search pages. Use the dataset for recurring snapshots and supply comparisons.
-
-### Lead Research
-Collect broker-facing listing data, addresses, and URLs for sales research, outreach preparation, or neighborhood-level tracking.
-
-### Pricing Analysis
-Build datasets of listing prices, room counts, and living areas to compare asking-price patterns across different searches.
-
-### Real-Estate Intelligence
-Create structured feeds for dashboards, BI tools, or custom workflows that need clean property-listing records.
-
----
+1. Open the Actor on Apify Store.
+2. Paste a Booli sale-search URL into `startUrl`, or leave the default to use all of Sweden.
+3. Set `results_wanted` and `max_pages` to control how much data is collected.
+4. Run the Actor.
+5. Download the dataset or connect it to Google Sheets, webhooks, or your own systems.
 
 ## Input Parameters
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `startUrl` | String | No | `https://www.booli.se/sok/till-salu` | Booli search URL to start from. |
-| `results_wanted` | Integer | No | `20` | Maximum number of listings to save. |
-| `max_pages` | Integer | No | `3` | Safety cap on how many search pages to visit. |
-| `proxyConfiguration` | Object | No | Apify Residential Proxy | Proxy settings for more reliable production runs. |
-
----
+| Parameter            | Type    | Required | Default                              | Description                                                                       |
+| -------------------- | ------- | -------- | ------------------------------------ | --------------------------------------------------------------------------------- |
+| `startUrl`           | String  | No       | `https://www.booli.se/sok/till-salu` | Booli sale-search URL to start from. Filters placed in the URL are respected.     |
+| `results_wanted`     | Integer | No       | `20`                                 | Maximum number of listings to save.                                               |
+| `max_pages`          | Integer | No       | `3`                                  | Safety cap on how many result pages to visit.                                     |
+| `proxyConfiguration` | Object  | No       | Apify Residential Proxy              | Proxy settings for reliable production runs. Residential proxies are recommended. |
 
 ## Output Data
 
-Each dataset item contains a cleaned listing object with only non-empty values. Common fields include:
+Each dataset item is a listing object that contains only non-empty values. The most useful fields are:
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `booliId` | Integer | Booli listing identifier. |
-| `url` | String | Absolute listing URL. |
-| `address` | String | Listing address. |
-| `locationText` | String | Human-readable location summary. |
-| `objectType` | String | Property type. |
-| `listPrice` | Number | Advertised list price. |
-| `rent` | Number | Monthly rent when available. |
-| `fee` | Number | Monthly association fee when available. |
-| `rooms` | Number | Number of rooms. |
-| `livingArea` | Number | Living area in square meters. |
-| `plotArea` | Number | Plot area in square meters when available. |
-| `daysActive` | Integer | Number of days the listing has been active. |
-| `published` | String | Publish timestamp or date when available. |
-| `latitude` | Number | Latitude coordinate. |
-| `longitude` | Number | Longitude coordinate. |
-| `brokerName` | String | Broker or office name when available. |
-| `thumbnail` | String | Listing image URL when available. |
-| `page` | Integer | Page number where the listing was collected. |
-| `searchUrl` | String | Root search URL used for the run. |
-
-Additional non-empty listing fields can also appear when Booli exposes them in the search payload.
-
----
+| Field           | Type    | Description                                   |
+| --------------- | ------- | --------------------------------------------- |
+| `booliId`       | Integer | Booli listing identifier.                     |
+| `url`           | String  | Direct listing URL.                           |
+| `address`       | String  | Listing address.                              |
+| `locationText`  | String  | Object type, area, and municipality summary.  |
+| `objectType`    | String  | Property type.                                |
+| `saleType`      | String  | Sale type.                                    |
+| `listPrice`     | Number  | Advertised asking price.                      |
+| `listPriceText` | String  | Asking price as displayed.                    |
+| `rooms`         | Number  | Number of rooms.                              |
+| `livingArea`    | Number  | Living area in square meters.                 |
+| `plotArea`      | Number  | Plot area in square meters when available.    |
+| `floor`         | String  | Floor description.                            |
+| `fee`           | Number  | Monthly association fee when available.       |
+| `rent`          | Number  | Monthly rent when available.                  |
+| `published`     | String  | Publication date text.                        |
+| `daysActive`    | Integer | Approximate days the listing has been active. |
+| `latitude`      | Number  | Latitude coordinate.                          |
+| `longitude`     | Number  | Longitude coordinate.                         |
+| `municipality`  | String  | Municipality name.                            |
+| `county`        | String  | County name.                                  |
+| `brokerName`    | String  | Broker or agency name.                        |
+| `thumbnail`     | String  | Preview image URL.                            |
+| `amenities`     | Array   | Amenity labels.                               |
+| `showing`       | String  | Next scheduled showing.                       |
+| `page`          | Integer | Result page the listing was collected from.   |
 
 ## Usage Examples
 
 ### Default Sale Search
 
+Collect the first listings across all of Sweden:
+
 ```json
 {
-	"startUrl": "https://www.booli.se/sok/till-salu",
-	"results_wanted": 20,
-	"max_pages": 3
+    "startUrl": "https://www.booli.se/sok/till-salu",
+    "results_wanted": 20,
+    "max_pages": 3
 }
 ```
 
 ### Area-Specific Search
 
-```json
-{
-	"startUrl": "https://www.booli.se/sok/till-salu/stockholm",
-	"results_wanted": 50,
-	"max_pages": 5
-}
-```
-
-### Production Run With Residential Proxy
+Collect listings for a specific area or property type by using a filtered Booli search URL:
 
 ```json
 {
-	"startUrl": "https://www.booli.se/sok/till-salu",
-	"results_wanted": 100,
-	"max_pages": 8,
-	"proxyConfiguration": {
-		"useApifyProxy": true,
-		"apifyProxyGroups": ["RESIDENTIAL"]
-	}
+    "startUrl": "https://www.booli.se/sok/till-salu?areaIds=1",
+    "results_wanted": 50,
+    "max_pages": 5
 }
 ```
 
----
+### Larger Run With A Proxy
+
+Collect a bigger dataset with proxy settings for steadier runs:
+
+```json
+{
+    "startUrl": "https://www.booli.se/sok/till-salu",
+    "results_wanted": 100,
+    "max_pages": 8,
+    "proxyConfiguration": {
+        "useApifyProxy": true,
+        "apifyProxyGroups": ["RESIDENTIAL"],
+        "apifyProxyCountry": "SE"
+    }
+}
+```
 
 ## Sample Output
 
 ```json
 {
-	"booliId": 1234567,
-	"source": "booli.se",
-	"url": "https://www.booli.se/bostad/1234567",
-	"address": "Examplegatan 12",
-	"locationText": "Examplegatan 12, Stockholm",
-	"objectType": "Lagenhet",
-	"listPrice": 5495000,
-	"rent": 2490,
-	"fee": 2490,
-	"rooms": 3,
-	"livingArea": 78,
-	"daysActive": 2,
-	"latitude": 59.334591,
-	"longitude": 18.06324,
-	"brokerName": "Example Makleri",
-	"thumbnail": "https://example-cdn.booli.se/image.jpg",
-	"page": 1,
-	"searchUrl": "https://www.booli.se/sok/till-salu"
+    "source": "booli.se",
+    "booliId": 6309020,
+    "listingId": "6309020",
+    "objectId": 690329,
+    "url": "https://www.booli.se/bostad/690329",
+    "address": "Näsbydalsvägen 12",
+    "locationText": "Lägenhet · Näsbydal · Täby",
+    "objectType": "Lägenhet",
+    "saleType": "succession",
+    "listPrice": 2850000,
+    "listPriceText": "2 850 000 kr",
+    "rooms": 2,
+    "livingArea": 62.5,
+    "floor": "vån 10",
+    "fee": 3955,
+    "published": "Inkommet idag",
+    "daysActive": 0,
+    "latitude": 59.4382017,
+    "longitude": 18.0656548,
+    "municipality": "Täby",
+    "county": "Stockholms län",
+    "brokerName": "HusmanHagberg",
+    "thumbnail": "https://bcdn.se/images/cache/57029360_640x0.jpg",
+    "imageCount": 5,
+    "amenities": ["Hiss", "Balkong"],
+    "showing": "Sön 25 okt kl 12:00",
+    "upcomingSale": false,
+    "page": 1
 }
 ```
 
----
-
 ## Tips for Best Results
 
-### Use Working Search URLs
-- Start from a Booli sale-search URL that already shows the filters you want.
-- Keep location, property type, or other search filters inside the URL itself.
-
-### Keep QA Runs Small
-- Use `results_wanted: 20` for short validation runs.
-- Increase limits after confirming the target search behaves as expected.
-
-### Prefer Residential Proxies
-- Residential proxies are recommended for steadier production runs.
-- If you run locally without an Apify proxy token, the actor falls back to direct browsing.
-
----
+- Put location, property type, and other filters directly into `startUrl`.
+- Start with `results_wanted: 20` for a quick test, then increase it for full collection.
+- Residential proxies are recommended for larger or repeated production runs.
+- Newly added listings can appear more than once across pages; the Actor removes duplicates automatically.
+- If you see fewer fields on some listings, the source simply does not publish that information for those items.
 
 ## Integrations
 
@@ -159,6 +186,7 @@ Additional non-empty listing fields can also appear when Booli exposes them in t
 - **Make** - Trigger follow-up automations from fresh listings.
 - **Zapier** - Send new dataset items into downstream tools.
 - **Webhooks** - Push data into custom applications.
+- **API** - Access datasets programmatically from your own systems.
 
 ### Export Formats
 
@@ -167,39 +195,44 @@ Additional non-empty listing fields can also appear when Booli exposes them in t
 - **Excel** - For business reporting.
 - **XML** - For external system imports.
 
----
-
 ## Frequently Asked Questions
 
 ### How many listings can I collect?
+
 You can collect as many as the search results expose, bounded by your `results_wanted` and `max_pages` settings.
 
-### Does the actor handle pagination?
-Yes. It moves through additional result pages until it reaches the requested listing limit or page cap.
+### Does the Actor handle pagination?
+
+Yes. It moves through additional result pages until it reaches the requested listing limit or the page cap.
 
 ### Why are some fields missing on some items?
-The actor removes empty values, so fields only appear when Booli exposes them for that listing.
+
+The Actor removes empty values, so a field only appears when Booli publishes it for that listing.
 
 ### Can I use filtered Booli searches?
-Yes. Put your desired Booli filters directly into `startUrl`.
+
+Yes. Put your desired Booli filters, such as location or property type, directly into `startUrl`.
+
+### Can I export the data to CSV or Excel?
+
+Yes. Apify datasets can be downloaded in CSV, Excel, JSON, XML, and other supported formats.
+
+### Can I run this Actor on a schedule?
+
+Yes. You can schedule the Actor in Apify Console to refresh listings hourly, daily, weekly, or at another interval.
 
 ### Do I need proxies?
-For reliable production runs, residential proxies are recommended.
 
----
+For reliable production runs, residential proxies are recommended. Small test runs can work without them.
+
+### Is it legal to scrape Booli?
+
+Scraping publicly available data can be legal, but you are responsible for complying with applicable laws, website terms, and privacy rules.
 
 ## Support
 
-For issues or feature requests, use the Apify Console issue and support channels tied to the actor.
-
-### Resources
-
-- [Apify Documentation](https://docs.apify.com/)
-- [Apify API Reference](https://docs.apify.com/api/v2)
-- [Scheduling Runs](https://docs.apify.com/platform/schedules)
-
----
+For issues, feature requests, or custom work, use the Issues tab on the Actor page or contact the developer through Apify.
 
 ## Legal Notice
 
-This actor is intended for legitimate data collection and analysis. You are responsible for ensuring your use complies with website terms and applicable laws.
+This Actor is designed for legitimate data collection from publicly available sources. You are responsible for using the data responsibly and complying with applicable laws and website terms.
